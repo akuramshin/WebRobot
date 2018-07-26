@@ -6,6 +6,7 @@
         <title>Camera</title>
 
         <link href="http://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <link href="static/style.css" rel="stylesheet" type="text/css" />
@@ -15,6 +16,15 @@
             <div class="row">
                 <div class="col-xs-12">
                     <img id="video" src="http://99.228.21.68:8081"></img>
+		    <div class="dropdown">
+		         <button onclick="dropDown()" class="dropbtn">Mode
+			    <i class="fa fa-caret-down"></i>
+			</button>
+			 <div id="myDropdown" class="dropdown-content">
+			     <a onclick="changeMode('Off')">Off</a>
+			     <a onclick="changeMode('Passive')">Passive</a>
+			 </div>
+		    </div>
                 </div>
             </div>
 	    <button id="leftButton" onclick="sendMove('left')">Left</button>
