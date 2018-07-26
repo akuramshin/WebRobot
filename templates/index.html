@@ -7,6 +7,7 @@
 
         <link href="http://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css" />
         <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <link href="static/style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -16,32 +17,12 @@
                     <img id="video" src="http://99.228.21.68:8081"></img>
                 </div>
             </div>
-	    <button id="leftButton" onclick="sendData('left')">Left</button>
-	    <button id="forwardButton" onclick="sendData('forward')">Forward</button>
-            <button id="backwardButton" onclick="sendData('backward')">Backward</button> 
-            <button id="rightButton" onclick="sendData('right')">Right</button>
+	    <button id="leftButton" onclick="sendMove('left')">Left</button>
+	    <button id="forwardButton" onclick="sendMove('forward')">Forward</button>
+        <button id="backwardButton" onclick="sendMove('backward')">Backward</button> 
+        <button id="rightButton" onclick="sendMove('right')">Right</button>
         </div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script type="text/javascript">
-	function sendData(dir) {
-
-		speed = 5;
-		var data = {"direction":dir, "speed":speed};
-
-		// ajax the JSON to the server
-		$.post({
-		    type: "POST",
-		    url: "/receiver",
-		    data: JSON.stringify({Data: data}),
-		    contentType: "application/json",
-		    dataType: "json",
-		    success: function(){console.log("sent");}
-		});
-
- 	     // stop link reloading the page
-	     event.preventDefault();
-	}
-	</script>
+	<script src="../client.js"></script>
     </body>
 </html>
