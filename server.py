@@ -9,6 +9,18 @@ bot = create2api.Create2()
 bot.digit_led_ascii('    ')  # clear DSEG before Off mode
 bot.start()
 
+def sendCmd(dir, speed):
+	if dir == "forward":
+		bot.drive(speed, 32767)
+	elif dir == "backward":
+		bot.drive(speed*-1, 32767)
+	elif dir == "right":
+		bot.drive(speed, -1)
+	elif dir == "left":
+		bot.drive(speed, 1)
+	else:
+		bot.drive(0, 32767)
+
 @app.route("/")
 def index():
     return render_template('index.html')
@@ -22,19 +34,18 @@ def recieve():
     speed = str(data['Data']['speed'])
     sendCmd(direction, speed)
         
-    return "JSON posted"
+    return "Robot moved"
+
+@app.route("/mode", methods = ['POST'])
+def rec():
+	# read the JSOn data recieved
+	data = request.get_json()
+
+	mode = str(data['Data']['mode'])
+	changeMode(mode)
+
+	return "Mode changed"
 
 if __name__ == "__main__":
     app.run("0.0.0.0", "8000")
 
-def sendCmd(dir, speed):
-	if dir == "forward":
-		bot.drive(speed, 32767)
-	elif dir == "backward":
-		bot.drive(speed*-1, 32767)
-	elif dir == "right":
-		bot.drive(speed, -1)
-	elif dir == "left":
-		bot.drive(speed, 1)
-	else:
-		bot.drive(0, 32767)
