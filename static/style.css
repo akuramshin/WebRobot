@@ -105,7 +105,7 @@ button:hover, button:active {
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
-    background-color: #ddd
+    background-color: #ddd;
 }
 
 /* show the dropdown menu */

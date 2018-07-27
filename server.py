@@ -21,6 +21,18 @@ def sendCmd(dir, speed):
 	else:
 		bot.drive(0, 32767)
 
+def changeMode(mode):
+	if mode == "Off":
+		bot.digit_led_ascii('    ')  # clear DSEG before Off mode
+		bot.stop()
+	elif mode == "Passive":
+		bot.digit_led_ascii('    ')  # clear DSEG before Passive mode
+		bot.start()
+	elif mode == "Safe":
+		bot.safe()
+	elif mode == "Full":
+		bot.full()
+
 @app.route("/")
 def index():
     return render_template('index.html')
