@@ -113,3 +113,11 @@ button:hover, button:active {
 .show {
     display: block;
 }
+
+.topbar {
+    overflow: hidden;
+}
+
+.topbar button {
+    float: left;
+}
