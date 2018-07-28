@@ -24,15 +24,19 @@ def sendCmd(dir, speed):
 
 def changeMode(mode):
 	if mode == "Off":
-		bot.digit_led_ascii('    ')  # clear DSEG before Off mode
+		bot.digit_led_ascii('    ')  # clear DSEG 
 		bot.stop()
 	elif mode == "Passive":
-		bot.digit_led_ascii('    ')  # clear DSEG before Passive mode
+		bot.digit_led_ascii('    ')  # clear DSEG 
 		bot.start()
 	elif mode == "Safe":
 		bot.safe()
 	elif mode == "Full":
 		bot.full()
+	elif mode == "Seek Dock":
+		bot.digit_led_ascii('DOCK')  # clear DSEG before Passive mode (Seek dock goes into passive mode)
+		bot.start()
+		bot.seek_dock()
 
 @app.route("/")
 def index():

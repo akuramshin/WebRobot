@@ -6,7 +6,7 @@
         <title>Camera</title>
 
         <link href="http://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css" />
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+	    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -18,15 +18,17 @@
                         <a onclick="changeMode('Off')">Off</a>
                         <a onclick="changeMode('Passive')">Passive</a>
                         <a onclick="changeMode('Full')">Full</a>
+                        <a onclick="changeMode('Seek Dock')">Seek Dock</a>
                     </div>
         </div>
         <div class="topbar">
             <button class="moveButton"  onmousedown="sendMove('left')">Left</button>
-	    <button class="moveButton" onmousedown="sendMove('forward')">Forward</button>
+	        <button class="moveButton" onmousedown="sendMove('forward')">Forward</button>
             <button class="moveButton" onmousedown="sendMove('backward')">Backward</button> 
             <button class="moveButton" onmousedown="sendMove('right')">Right</button>
+            <input type="range" min="1" max="500" value="250" class="slider">
         </div>
-        <img id="video" src="http://99.228.21.68:8081"></img>
+        <img id="video"></img>
         <script src="{{ url_for('static', filename='client.js') }}"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>        
     </body>

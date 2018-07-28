@@ -1,9 +1,33 @@
+// Stop the robot as soon as button is no longer pressed
 window.onload = function(){
 	$(".moveButton").mouseup(function() {
-		sendMove('Stop');
+		sendMove("stop");
 	});
+
+	$("#video").attr("src", "http://" + window.location.hostname +":8081")
 };
 
+// Add keyboard functionality
+window.onkeydown = function (event){
+	if (event.keyCode == 38)
+{		sendMove("forward");
+	}
+	else if (event.keyCode == 40){
+		sendMove("backward");
+	}
+	else if (event.keyCode == 39){
+		sendMove("right");
+	}
+	else if (event.keyCode == 37){
+		sendMove("left");
+	}
+}
+
+window.onkeyup = function(){
+	sendMove("stop");
+}
+
+// function to send move data to server
 function sendMove(dir) {
 	speed = 250;
 	var data = {"direction":dir, "speed":speed};
