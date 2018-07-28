@@ -10,6 +10,7 @@ bot.digit_led_ascii('    ')  # clear DSEG before Off mode
 bot.start()
 
 def sendCmd(dir, speed):
+        speed = 250
 	if dir == "forward":
 		bot.drive(speed, 32767)
 	elif dir == "backward":
@@ -44,7 +45,7 @@ def recieve():
 
     direction = str(data['Data']['direction'])
     speed = str(data['Data']['speed'])
-    sendCmd(direction, speed)
+    sendCmd(direction, int(speed))
         
     return "Robot moved"
 

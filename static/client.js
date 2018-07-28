@@ -1,5 +1,11 @@
+window.onload = function(){
+	$(".moveButton").mouseup(function() {
+		sendMove('Stop');
+	});
+};
+
 function sendMove(dir) {
-	speed = 5;
+	speed = 250;
 	var data = {"direction":dir, "speed":speed};
 
 	// ajax the JSON to the server

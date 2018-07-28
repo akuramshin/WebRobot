@@ -21,10 +21,10 @@
                     </div>
         </div>
         <div class="topbar">
-            <button id="leftButton" onclick="sendMove('left')">Left</button>
-	    <button id="forwardButton" onclick="sendMove('forward')">Forward</button>
-            <button id="backwardButton" onclick="sendMove('backward')">Backward</button> 
-            <button id="rightButton" onclick="sendMove('right')">Right</button>
+            <button class="moveButton"  onmousedown="sendMove('left')">Left</button>
+	    <button class="moveButton" onmousedown="sendMove('forward')">Forward</button>
+            <button class="moveButton" onmousedown="sendMove('backward')">Backward</button> 
+            <button class="moveButton" onmousedown="sendMove('right')">Right</button>
         </div>
         <img id="video" src="http://99.228.21.68:8081"></img>
         <script src="{{ url_for('static', filename='client.js') }}"></script>
