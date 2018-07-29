@@ -1,3 +1,11 @@
+var slider = document.getElementById("slider");
+var output = document.getElementById("speed");
+output.innerHTML = slider.value;
+
+slider.oninput = function(){
+	output.innerHTML = this.value;
+}
+
 // Stop the robot as soon as button is no longer pressed
 window.onload = function(){
 	$(".moveButton").mouseup(function() {
