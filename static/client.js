@@ -41,7 +41,7 @@ window.onkeyup = function(){
 	sendMove("stop");
 }
 
-// Fetch the current mode of the robot and display
+/* Fetch the current mode of the robot and display
 function getCurrMode(){
 	fetch("/getMode")
 	.then(function(response){
@@ -51,6 +51,7 @@ function getCurrMode(){
 		mode.innerHTML = jsonResponse.mode;
 	});
 }
+*/
 
 // function to send move data to server
 function sendMove(dir) {
@@ -105,5 +106,6 @@ function changeMode(mode) {
 	// stop link reloading the page
 	event.preventDefault();
 	console.log("Changed mode to " + mode);
-	getCurrMode();
+	this.mode.innerHTML = mode;
+	//getCurrMode();
 }

@@ -64,6 +64,7 @@ def rec():
 
 	return "Mode changed"
 
+"""
 @app.route("/getMode", methods = ['GET'])
 def returnMode():
 	# Get the current mode of the bot
@@ -82,7 +83,7 @@ def returnMode():
 	currMode = json.dumps({"mode": mode})
 
 	return currMode
-
+"""
 
 if __name__ == "__main__":
     app.run("0.0.0.0", "8000")
