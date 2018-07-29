@@ -219,12 +219,18 @@
         "102": 12, 
         "103": 9
     }, 
-    "oi modes": [
-        "off", 
-        "passive", 
-        "safe", 
-        "full"
-    ], 
+    "oi modes": {
+        "OFF" : 0,
+        "PASSIVE" : 1,
+        "SAFE" : 2,
+        "FULL" : 3,
+        "NOT CHARGING" : 0,
+        "RECONDITIONING" : 1,
+        "FULL CHARGING" : 2,
+        "TRICKLE CHARGING" : 3,
+        "WAITING" : 4,
+        "CHARGE FAULT" : 5
+    },
     "ascii table": {
         " ": 32, 
         "\"": 34, 

@@ -1,9 +1,13 @@
+
+// Get the speed set with slider and update 'speedometer'
 var slider = document.getElementById("slider");
-var output = document.getElementById("speed");
-output.innerHTML = slider.value;
+var speed = document.getElementById("speed");
+var mode = document.getElementById("mode");
+
+speed.innerHTML = slider.value;
 
 slider.oninput = function(){
-	output.innerHTML = this.value;
+	speed.innerHTML = this.value;
 }
 
 // Stop the robot as soon as button is no longer pressed
@@ -13,6 +17,8 @@ window.onload = function(){
 	});
 
 	$("#video").attr("src", "http://" + window.location.hostname +":8081")
+
+	getCurrMode();
 };
 
 // Add keyboard functionality
@@ -35,9 +41,20 @@ window.onkeyup = function(){
 	sendMove("stop");
 }
 
+// Fetch the current mode of the robot and display
+function getCurrMode(){
+	fetch("/getMode")
+	.then(function(response){
+		return response.json();
+	})
+	.then(function(jsonResponse){
+		mode.innerHTML = jsonResponse.mode;
+	});
+}
+
 // function to send move data to server
 function sendMove(dir) {
-	speed = 250;
+	speed = slider.value;
 	var data = {"direction":dir, "speed":speed};
 
 	// ajax the JSON to the server
@@ -88,4 +105,5 @@ function changeMode(mode) {
 	// stop link reloading the page
 	event.preventDefault();
 	console.log("Changed mode to " + mode);
+	getCurrMode();
 }

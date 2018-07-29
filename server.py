@@ -16,9 +16,9 @@ def sendCmd(dir, speed):
 	elif dir == "backward":
 		bot.drive(speed*-1, 32767)
 	elif dir == "right":
-		bot.drive(speed, -1)
+		bot.drive(speed/2, -1)
 	elif dir == "left":
-		bot.drive(speed, 1)
+		bot.drive(speed/2, 1)
 	else:
 		bot.drive(0, 32767)
 
@@ -40,11 +40,12 @@ def changeMode(mode):
 
 @app.route("/")
 def index():
+	# Return our main page
     return render_template('index.html')
 
 @app.route("/move", methods = ['POST'])
 def recieve():
-    # read the JSON data recieved
+    # read the JSON data of the direction and speed issued
     data = request.get_json()
 
     direction = str(data['Data']['direction'])
@@ -55,13 +56,33 @@ def recieve():
 
 @app.route("/mode", methods = ['POST'])
 def rec():
-	# read the JSOn data recieved
+	# read the JSON data of the new mode
 	data = request.get_json()
 
 	mode = str(data['Data']['mode'])
 	changeMode(mode)
 
 	return "Mode changed"
+
+@app.route("/getMode", methods = ['GET'])
+def returnMode():
+	# Get the current mode of the bot
+	if bot.sensor_state['oi mode'] == bot.config.data['oi modes']['OFF']:
+		mode = "off"
+	elif bot.sensor_state['oi mode'] == bot.config.data['oi modes']['PASSIVE']:
+		mode = "passive"
+	elif bot.sensor_state['oi mode'] == bot.config.data['oi modes']['SAFE']:
+		mode = "safe"
+	elif bot.sensor_state['oi mode'] == bot.config.data['oi modes']['FULL']:
+		mode = "full"
+	else:
+		mode = "none"
+	
+	# Create JSON data object with the current mode
+	currMode = json.dumps({"mode": mode})
+
+	return currMode
+
 
 if __name__ == "__main__":
     app.run("0.0.0.0", "8000")
