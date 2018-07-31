@@ -1,47 +1,36 @@
 from flask import Flask, render_template, request, redirect, Response
 import random, json
-import create2api
 import sys
+import socket
 
 app = Flask(__name__)
-bot = create2api.Create2()
+# Add a feature to index.html where we can see if bot is connected or not ...
+# (if the socket client connected with the server running on the bot )
 
-bot.digit_led_ascii('    ')  # clear DSEG before Off mode
-bot.start()
+HOST = "192.168.0.55"
+PORT = 9999
 
-def sendCmd(dir, speed):
-        speed = 250
-	if dir == "forward":
-		bot.drive(speed, 32767)
-	elif dir == "backward":
-		bot.drive(speed*-1, 32767)
-	elif dir == "right":
-		bot.drive(speed/2, -1)
-	elif dir == "left":
-		bot.drive(speed/2, 1)
-	else:
-		bot.drive(0, 32767)
+sock = scoket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-def changeMode(mode):
-	if mode == "Off":
-		bot.digit_led_ascii('    ')  # clear DSEG 
-		bot.stop()
-	elif mode == "Passive":
-		bot.digit_led_ascii('    ')  # clear DSEG 
-		bot.start()
-	elif mode == "Safe":
-		bot.safe()
-	elif mode == "Full":
-		bot.full()
-	elif mode == "Seek Dock":
-		bot.digit_led_ascii('DOCK')  # clear DSEG before Passive mode (Seek dock goes into passive mode)
-		bot.start()
-		bot.seek_dock()
+def connect():
+	try:
+		sock.connect((HOST, PORT))
+		print("Connection with bot established.")
+		return True
+	except Exception:
+		print("Failed to connect to bot.")
+		return False
+
+
+def relay(msg):
+	sock.send(msg.encode())
+
 
 @app.route("/")
 def index():
 	# Return our main page
     return render_template('index.html')
+
 
 @app.route("/move", methods = ['POST'])
 def recieve():
@@ -50,9 +39,10 @@ def recieve():
 
     direction = str(data['Data']['direction'])
     speed = str(data['Data']['speed'])
-    sendCmd(direction, int(speed))
+    relay("MO" + direction + "S" + int(speed))
         
     return "Robot moved"
+
 
 @app.route("/mode", methods = ['POST'])
 def rec():
@@ -60,7 +50,7 @@ def rec():
 	data = request.get_json()
 
 	mode = str(data['Data']['mode'])
-	changeMode(mode)
+	relay("MD" + mode)
 
 	return "Mode changed"
 
