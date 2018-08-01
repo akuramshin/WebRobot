@@ -12,32 +12,8 @@ bot = create2api.Create2()
 bot.digit_led_ascii('    ')  # clear DSEG before Off mode
 bot.start()
 
-try:
-	while True:
-		conn, addr = sock.accept()
-		print("Connected " + addr[0] + ":" + addr[1])
-
-		while True:
-			try:
-				data = conn.recv(1024).decode()
-			except Exception:
-				break;
-			print(data)
-			if data[0:2] == "MO":
-				# We are moving
-				print(data)
-			elif data[0:2] == "MD":
-				# We are changing modes
-				print(data)
-		print("Disconnected " + addr[0] + ":" + addr[1])
-		conn.close()
-
-except Exception:
-	sock.shutdown(socket.SHUT_RDWR)
-    sock.close()
 
 def sendCmd(dir, speed):
-        speed = 250
 	if dir == "forward":
 		bot.drive(speed, 32767)
 	elif dir == "backward":
@@ -65,3 +41,33 @@ def changeMode(mode):
 		bot.digit_led_ascii('DOCK')  # clear DSEG before Passive mode (Seek dock goes into passive mode)
 		bot.start()
 		bot.seek_dock()
+
+try:
+	while True:
+		conn, addr = sock.accept()
+		print("Connected " + addr[0] + ":" + addr[1])
+
+		while True:
+			try:
+				data = conn.recv(1024).decode()
+			except Exception:
+				break;
+			if data[0:2] == "MO":
+				# We are moving
+				print(data)
+				direction = data[2:data.index("S")]
+				speed = data[data.index("S")+1:]
+				sendCmd(direction, int(speed))
+
+			elif data[0:2] == "MD":
+				# We are changing modes
+				print(data)
+				mode = data[2:]
+				changeMode(mode)
+
+		print("Disconnected " + addr[0] + ":" + addr[1])
+		conn.close()
+
+except Exception:
+	sock.shutdown(socket.SHUT_RDWR)
+	sock.close()

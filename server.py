@@ -10,7 +10,7 @@ app = Flask(__name__)
 HOST = "192.168.0.55"
 PORT = 9999
 
-sock = scoket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 def connect():
 	try:
@@ -39,7 +39,7 @@ def recieve():
 
     direction = str(data['Data']['direction'])
     speed = str(data['Data']['speed'])
-    relay("MO" + direction + "S" + int(speed))
+    relay("MO" + direction + "S" + speed)
         
     return "Robot moved"
 
@@ -76,5 +76,5 @@ def returnMode():
 """
 
 if __name__ == "__main__":
-    app.run("0.0.0.0", "8000")
-
+	connect()
+	app.run("0.0.0.0", "8000")

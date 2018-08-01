@@ -1,4 +1,6 @@
 
+//TODO: Add a time limit between movement commands? ~0.2 seconds
+
 // Get the speed set with slider and update 'speedometer'
 var slider = document.getElementById("slider");
 var speed = document.getElementById("speed");
