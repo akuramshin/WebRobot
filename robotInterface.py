@@ -6,6 +6,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 sock.bind(('', 9999))
 sock.listen(1)
+print("Listening for connections...")
 
 # Create out bot connection
 bot = create2api.Create2()
@@ -45,7 +46,7 @@ def changeMode(mode):
 try:
 	while True:
 		conn, addr = sock.accept()
-		print("Connected " + addr[0] + ":" + addr[1])
+		print("Connected " + str(addr[0]) + ":" + str(addr[1]))
 
 		while True:
 			try:
@@ -65,8 +66,9 @@ try:
 				mode = data[2:]
 				changeMode(mode)
 
-		print("Disconnected " + addr[0] + ":" + addr[1])
+		print("Disconnected " + str(addr[0]) + ":" + str(addr[1]))
 		conn.close()
+		bot.stop()
 
 except Exception:
 	sock.shutdown(socket.SHUT_RDWR)
