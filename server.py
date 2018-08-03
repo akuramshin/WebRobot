@@ -11,6 +11,7 @@ HOST = "192.168.0.55"
 PORT = 9999
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+connected = False
 
 def connect():
 	try:
@@ -23,7 +24,8 @@ def connect():
 
 
 def relay(msg):
-	sock.send(msg.encode())
+	if connected:
+		sock.send(msg.encode())
 
 
 @app.route("/")
@@ -76,5 +78,5 @@ def returnMode():
 """
 
 if __name__ == "__main__":
-	connect()
+	connected = connect()
 	app.run("0.0.0.0", "8000")

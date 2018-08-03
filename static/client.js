@@ -1,6 +1,9 @@
 
 //TODO: Add a time limit between movement commands? ~0.2 seconds
 
+// Prevent holding down key from firing repetedly
+var fired = false;
+
 // Get the speed set with slider and update 'speedometer'
 var slider = document.getElementById("slider");
 var speed = document.getElementById("speed");
@@ -19,28 +22,30 @@ window.onload = function(){
 	});
 
 	$("#video").attr("src", "http://" + window.location.hostname +":8081")
-
-	getCurrMode();
 };
 
 // Add keyboard functionality
 window.onkeydown = function (event){
-	if (event.keyCode == 38)
-{		sendMove("forward");
-	}
-	else if (event.keyCode == 40){
-		sendMove("backward");
-	}
-	else if (event.keyCode == 39){
-		sendMove("right");
-	}
-	else if (event.keyCode == 37){
-		sendMove("left");
+	if (!fired){
+		if (event.keyCode == 38){		
+			sendMove("forward");
+		}
+		else if (event.keyCode == 40){
+			sendMove("backward");
+		}
+		else if (event.keyCode == 39){
+			sendMove("right");
+		}
+		else if (event.keyCode == 37){
+			sendMove("left");
+		}
+		fired = true;
 	}
 }
 
 window.onkeyup = function(){
 	sendMove("stop");
+	fired = false;
 }
 
 /* Fetch the current mode of the robot and display
