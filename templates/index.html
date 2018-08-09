@@ -26,9 +26,13 @@
 	        <button class="moveButton" onmousedown="sendMove('forward')">Forward</button>
             <button class="moveButton" onmousedown="sendMove('backward')">Backward</button> 
             <button class="moveButton" onmousedown="sendMove('right')">Right</button>
+        </div>
+        <div class="bottombar">
             <input type="range" id="slider"  min="1" max="500" value="250">
-            <p>Speed: <span id="speed"></span>mm/s</p>
-            <p>Mode: <span id="mode"></span></p>
+            <p>Speed: <span id="speed" style="color: #42f483"></span>mm/s</p>
+            <p>Mode: <span id="mode" style="color: #42f483">Off</span></p>
+            <p>Status: </p>
+            <span id="dot"></span>
         </div>
         <img id="video"></img>
         <script src="{{ url_for('static', filename='client.js') }}"></script>

@@ -4,6 +4,7 @@ body {
 
     font-family: 'Lato', sans-serif;
     font-weight: 400;
+    background: #bc1c42;
 }
 
 h1 {
@@ -12,7 +13,6 @@ h1 {
 }
 
 p {
-    float: left;
     font-size: 16px;
 }
 
@@ -44,14 +44,16 @@ button {
 }
 
 button {
-    border: 0px;
     padding: 8px 10px;
     border-radius: 1px;
 
+    background-color: #3498DB;
+    color: white;
+    border: none;
     cursor: pointer;
-    color: #fff;
-    background: #bc1c42;
+    margin: 0;
     text-align: center;
+    border-color: white;
 
     -webkit-transition: 0.15s background ease;
        -moz-transition: 0.15s background ease;
@@ -60,8 +62,8 @@ button {
             transition: 0.15s background ease;
 }
 
-button:hover, button:active {
-    background: #d25;
+button:hover, button:focus {
+    background-color: #2980B9;
 }
 
 .login {
@@ -88,6 +90,7 @@ button:hover, button:active {
 
 #slider {
     float: left;
+    width: 150px;
 }
 
 /* Display of the live stream */
@@ -96,20 +99,13 @@ button:hover, button:active {
     height: 100%;
 }
 
-/* Dropdown Button */
-.dropbtn {
-    background-color: #3498DB;
-    color: white;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    margin: 0;
-    text-align: center;
-}
-
-/* Dropdown button on hover & focus*/
-.dropbtn:hover, .dropbtn:focus {
-    background-color: #2980B9;
+/* Connection indicator */
+#dot {
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
 }
 
 /* The contianer for dropdown - needed to position the content */
@@ -124,7 +120,7 @@ button:hover, button:active {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 160px;
+    min-width: 150px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
@@ -150,9 +146,23 @@ button:hover, button:active {
 /* Top 'menu' bar*/
 .topbar {
     overflow: hidden;
+    padding-left: 5px;
 }
 
-.topbar button {
-    float: left;
+/* Bottom  'menu' bar */
+.bottombar {
+    height: 35px;
+    color: #fff;
+    overflow: hidden;
 }
 
+.bottombar p, input, span{
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    display: inline-block;
+    line-height: 35px;
+    vertical-align: top;
+}
+
+  

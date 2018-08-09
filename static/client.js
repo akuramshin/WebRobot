@@ -3,11 +3,13 @@
 
 // Prevent holding down key from firing repetedly
 var fired = false;
+var connStatus = false;
 
 // Get the speed set with slider and update 'speedometer'
 var slider = document.getElementById("slider");
 var speed = document.getElementById("speed");
 var mode = document.getElementById("mode");
+var indicator = document.getElementById("dot");
 
 speed.innerHTML = slider.value;
 
@@ -48,21 +50,29 @@ window.onkeyup = function(){
 	fired = false;
 }
 
-/* Fetch the current mode of the robot and display
-function getCurrMode(){
-	fetch("/getMode")
+// Fetch the current mode of the robot and display
+function getCurrStatus(){
+	fetch("/getStatus")
 	.then(function(response){
 		return response.json();
 	})
 	.then(function(jsonResponse){
-		mode.innerHTML = jsonResponse.mode;
+		connStatus = jsonResponse.status;
 	});
+
+	if (connStatus){
+		indicator.style.color = "#42f483";
+		console.log("Robot connected!");
+	}else{
+		indicator.style.color = "red";
+		console.log("Robot is not connected!");
+	}
 }
-*/
+
 
 // function to send move data to server
 function sendMove(dir) {
-	speed = slider.value;
+	var speed = slider.value;
 	var data = {"direction":dir, "speed":speed};
 
 	// ajax the JSON to the server
@@ -114,5 +124,4 @@ function changeMode(mode) {
 	event.preventDefault();
 	console.log("Changed mode to " + mode);
 	this.mode.innerHTML = mode;
-	//getCurrMode();
 }

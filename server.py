@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 app.secret_key = 'X;\xce\xcc\xde\x8f.\x117\x16tO\xfd\x98\n<'
 
-# Add a feature to index.html where we can see if bot is connected or not ...
+# Add a feature to index.HOST where we can see if bot is connected or not ...
 # (if the socket client connected with the server running on the bot )
 HOST = "192.168.0.55"
 PORT = 9999
@@ -72,26 +72,15 @@ def rec():
 
 	return "Mode changed"
 
-"""
-@app.route("/getMode", methods = ['GET'])
+
+# Return the status of the connection with the bot
+@app.route("/getStatus", methods = ['GET'])
 def returnMode():
-	# Get the current mode of the bot
-	if bot.sensor_state['oi mode'] == bot.config.data['oi modes']['OFF']:
-		mode = "off"
-	elif bot.sensor_state['oi mode'] == bot.config.data['oi modes']['PASSIVE']:
-		mode = "passive"
-	elif bot.sensor_state['oi mode'] == bot.config.data['oi modes']['SAFE']:
-		mode = "safe"
-	elif bot.sensor_state['oi mode'] == bot.config.data['oi modes']['FULL']:
-		mode = "full"
-	else:
-		mode = "none"
-	
-	# Create JSON data object with the current mode
-	currMode = json.dumps({"mode": mode})
+
+	currMode = json.dumps({"status": str(connected)})
 
 	return currMode
-"""
+
 
 if __name__ == "__main__":
 	connected = connect()
