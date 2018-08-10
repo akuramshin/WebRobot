@@ -13,7 +13,7 @@ HOST = "192.168.0.55"
 PORT = 9999
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-connected = False
+global connected 
 
 def connect():
 	try:
@@ -75,7 +75,9 @@ def rec():
 
 # Return the status of the connection with the bot
 @app.route("/getStatus", methods = ['GET'])
-def returnMode():
+def returnStatus():
+	if  connected == False:
+		connected = connect()
 
 	currMode = json.dumps({"status": str(connected)})
 

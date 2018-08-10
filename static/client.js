@@ -24,6 +24,8 @@ window.onload = function(){
 	});
 
 	$("#video").attr("src", "http://" + window.location.hostname +":8081")
+
+	connect();
 };
 
 // Add keyboard functionality
@@ -49,6 +51,14 @@ window.onkeyup = function(){
 	sendMove("stop");
 	fired = false;
 }
+
+// Attempt to connect to bot if not already connected
+function connect(){
+	if (!connStatus){
+		getCurrStatus();
+	}
+}
+
 
 // Fetch the current mode of the robot and display
 function getCurrStatus(){

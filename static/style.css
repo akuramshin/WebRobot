@@ -156,7 +156,7 @@ button:hover, button:focus {
     overflow: hidden;
 }
 
-.bottombar p, input, span{
+.bottombar p, input, span, button{
     margin: 0;
     padding: 0;
     margin-left: 10px;
