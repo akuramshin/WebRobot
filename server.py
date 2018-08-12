@@ -7,22 +7,22 @@ app = Flask(__name__)
 
 app.secret_key = 'X;\xce\xcc\xde\x8f.\x117\x16tO\xfd\x98\n<'
 
-# Add a feature to index.HOST where we can see if bot is connected or not ...
-# (if the socket client connected with the server running on the bot )
 HOST = "192.168.0.55"
 PORT = 9999
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-global connected 
+connected = False
 
 def connect():
-	try:
-		sock.connect((HOST, PORT))
-		print("Connection with bot established.")
-		return True
-	except Exception:
-		print("Failed to connect to bot.")
-		return False
+	if not connected:
+		try:
+			sock.connect((HOST, PORT))
+			print("Connection with bot established.")
+			return True
+		except Exception:
+			print("Failed to connect to bot.")
+			return False
+	return True
 
 
 def relay(msg):
@@ -58,7 +58,7 @@ def recieve():
     direction = str(data['Data']['direction'])
     speed = str(data['Data']['speed'])
     relay("MO" + direction + "S" + speed)
-        
+
     return "Robot moved"
 
 
@@ -76,9 +76,7 @@ def rec():
 # Return the status of the connection with the bot
 @app.route("/getStatus", methods = ['GET'])
 def returnStatus():
-	if  connected == False:
-		connected = connect()
-
+	connected = connect()
 	currMode = json.dumps({"status": str(connected)})
 
 	return currMode

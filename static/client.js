@@ -9,7 +9,7 @@ var connStatus = false;
 var slider = document.getElementById("slider");
 var speed = document.getElementById("speed");
 var mode = document.getElementById("mode");
-var indicator = document.getElementById("dot");
+var dot = document.getElementById("dot");
 
 speed.innerHTML = slider.value;
 
@@ -31,7 +31,7 @@ window.onload = function(){
 // Add keyboard functionality
 window.onkeydown = function (event){
 	if (!fired){
-		if (event.keyCode == 38){		
+		if (event.keyCode == 38){
 			sendMove("forward");
 		}
 		else if (event.keyCode == 40){
@@ -71,10 +71,10 @@ function getCurrStatus(){
 	});
 
 	if (connStatus){
-		indicator.style.color = "#42f483";
+		dot.style.backgroundColor= "#42f483";
 		console.log("Robot connected!");
 	}else{
-		indicator.style.color = "red";
+		dot.style.backgroundColor = "red";
 		console.log("Robot is not connected!");
 	}
 }
