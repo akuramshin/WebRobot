@@ -6,7 +6,7 @@ Website interface to controll the Create 2 iRobot through the net with a livestr
 TODO bug fixes: 
  -  Add a time limit between movement commands? ~0.2 seconds
  -  Possibly make the image reload as soon as connection established?
- -  Connection status still stays red even if Connected...
+ -  What if the robot disconnects? We need to update indicator? Or just refresh page?
  
  TODO Long term:
   - Intergrate voice activation/commands (google home/alexa but portable)
