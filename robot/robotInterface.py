@@ -52,8 +52,11 @@ try:
 			try:
 				data = conn.recv(1024).decode()
 			except Exception:
-				break;
-			print(data)
+				break
+			if data:
+				print(data)
+			else:
+				break
 			if data[0:2] == "MO":
 				# We are moving
 				direction = data[2:data.index("S")]
