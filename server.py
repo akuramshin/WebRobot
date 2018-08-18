@@ -28,8 +28,12 @@ def connect():
 
 def relay(msg):
 	if connected:
-		print("Command sent!")
-		sock.send(msg.encode())
+		try:
+			print("Command sent")
+			sock.send(msg.encode())
+		except Exception:
+			print("Failed to send command")
+			connected = False
 
 
 @app.route("/")

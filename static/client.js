@@ -64,17 +64,16 @@ function getCurrStatus(){
 		return response.json();
 	})
 	.then(function(jsonResponse){
-		console.log(jsonResponse);
 		connStatus = (jsonResponse.status == "True");
-	});
 
-	if (connStatus){
-		dot.style.backgroundColor= "#42f483";
-		console.log("Robot connected!");
-	}else{
-		dot.style.backgroundColor = "red";
-		console.log("Robot is not connected!");
-	}
+		if (connStatus){
+			dot.style.backgroundColor = "#42f483";
+			console.log("Robot connected!");
+		}else{
+			dot.style.backgroundColor = "red";
+			console.log("Robot is not connected!");
+		}
+	});
 }
 
 
