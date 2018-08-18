@@ -37,6 +37,11 @@ input:focus{
     box-shadow: none;
 }
 
+input [type=submit]{
+  background-color: #3498DB;
+  color: white;
+}
+
 button {
     height: 35px;
     width: 150px;

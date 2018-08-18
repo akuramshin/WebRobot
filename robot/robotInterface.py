@@ -29,10 +29,10 @@ def sendCmd(dir, speed):
 
 def changeMode(mode):
 	if mode == "Off":
-		bot.digit_led_ascii('    ')  # clear DSEG 
+		bot.digit_led_ascii('    ')  # clear DSEG
 		bot.stop()
 	elif mode == "Passive":
-		bot.digit_led_ascii('    ')  # clear DSEG 
+		bot.digit_led_ascii('    ')  # clear DSEG
 		bot.start()
 	elif mode == "Safe":
 		bot.safe()
@@ -53,16 +53,15 @@ try:
 				data = conn.recv(1024).decode()
 			except Exception:
 				break;
+			print(data)
 			if data[0:2] == "MO":
 				# We are moving
-				print(data)
 				direction = data[2:data.index("S")]
 				speed = data[data.index("S")+1:]
 				sendCmd(direction, int(speed))
 
 			elif data[0:2] == "MD":
 				# We are changing modes
-				print(data)
 				mode = data[2:]
 				changeMode(mode)
 
@@ -71,5 +70,6 @@ try:
 		bot.stop()
 
 except Exception:
+	print("Socket terminated")
 	sock.shutdown(socket.SHUT_RDWR)
 	sock.close()

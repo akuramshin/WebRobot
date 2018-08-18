@@ -1,6 +1,3 @@
-
-//TODO: Add a time limit between movement commands? ~0.2 seconds
-
 // Prevent holding down key from firing repetedly
 var fired = false;
 var connStatus = false;
@@ -67,7 +64,8 @@ function getCurrStatus(){
 		return response.json();
 	})
 	.then(function(jsonResponse){
-		connStatus = jsonResponse.status;
+		console.log(jsonResponse);
+		connStatus = (jsonResponse.status == "True");
 	});
 
 	if (connStatus){

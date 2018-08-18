@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 app.secret_key = 'X;\xce\xcc\xde\x8f.\x117\x16tO\xfd\x98\n<'
 
+# The local IP and Port of the socket server on the bot
 HOST = "192.168.0.55"
 PORT = 9999
 
@@ -27,6 +28,7 @@ def connect():
 
 def relay(msg):
 	if connected:
+		print("Command sent!")
 		sock.send(msg.encode())
 
 

@@ -2,6 +2,13 @@
 {% block body %}
 {% if session['logged_in'] %}
 <p>You're already logged in!</p>
+<button id="homeButton">Home</button>
+
+<script type="text/javascript">
+	document.getElementById("homeButton").onclick = function () {
+		location.href = "http://" + window.location.hostname + ":255/";
+	};
+</script>
 {% else %}
 <form action="/login" method="POST">
 	<div class="login">
