@@ -15,18 +15,18 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 connected = False
 
 def connect():
-	if not connected:
-		try:
-			sock.connect((HOST, PORT))
-			print("Connection with bot established.")
-			return True
-		except Exception:
-			print("Failed to connect to bot.")
-			return False
-	return True
+	global connected
+	try:
+		sock.connect((HOST, PORT))
+		print("Connection with bot established.")
+		connected = True
+	except Exception:
+		print("Failed to connect to bot.")
+		connected = False
 
 
 def relay(msg):
+	global connected
 	if connected:
 		try:
 			print("Command sent")
@@ -82,9 +82,10 @@ def rec():
 # Return the status of the connection with the bot
 @app.route("/getStatus", methods = ['GET'])
 def returnStatus():
-	connected = connect()
-	currMode = json.dumps({"status": str(connected)})
+	if not connected:
+		connect()
 
+	currMode = json.dumps({"status": str(connected)})
 	return currMode
 
 
