@@ -79,22 +79,24 @@ function getCurrStatus(){
 
 // function to send move data to server
 function sendMove(dir) {
-	var speed = slider.value;
-	var data = {"direction":dir, "speed":speed};
+	if (connStatus){
+		var speed = slider.value;
+		var data = {"direction":dir, "speed":speed};
 
-	// ajax the JSON to the server
-	$.post({
-		type: "POST",
-		url: "/move",
-		data: JSON.stringify({Data: data}),
-	    contentType: "application/json",
-	    dataType: "json",
-	    success: function(){}
-	});
+		// ajax the JSON to the server
+		$.post({
+			type: "POST",
+			url: "/move",
+			data: JSON.stringify({Data: data}),
+			contentType: "application/json",
+			dataType: "json",
+			success: function(){}
+		});
 
-	// stop link reloading the page
-	event.preventDefault();
-	console.log("Moved " + dir + " at " + speed + "mm/s");
+		// stop link reloading the page
+		event.preventDefault();
+		console.log("Moved " + dir + " at " + speed + "mm/s");
+	}
 }
 
 /* When the user clicks the button,
@@ -115,20 +117,22 @@ window.onclick = function(event) {
 
 // Function that changes robot mode and sends info to server
 function changeMode(mode) {
-	var data = {"mode":mode};
+	if (connStatus){
+		var data = {"mode":mode};
 
-	// ajax the JSON to the server
-	$.post({
-		type: "POST",
-		url: "/mode",
-		data: JSON.stringify({Data: data}),
-	    contentType: "application/json",
-	    dataType: "json",
-	    success: function(){}
-	});
+		// ajax the JSON to the server
+		$.post({
+			type: "POST",
+			url: "/mode",
+			data: JSON.stringify({Data: data}),
+			contentType: "application/json",
+			dataType: "json",
+			success: function(){}
+		});
 
-	// stop link reloading the page
-	event.preventDefault();
-	console.log("Changed mode to " + mode);
-	this.mode.innerHTML = mode;
+		// stop link reloading the page
+		event.preventDefault();
+		console.log("Changed mode to " + mode);
+		this.mode.innerHTML = mode;
+	}
 }

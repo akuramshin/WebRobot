@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, Response, session, abort
+from flask import Flask, flash, render_template, request, redirect, Response, session, abort
 import random, json
 import sys
 import socket
@@ -52,7 +52,7 @@ def do_login():
 		if request.form['password'] == 'password' and request.form['username'] == 'admin':
 			session['logged_in'] = True
 		else:
-			flash('Wrong Password!')
+			flash(u'Invalid password or username', 'error')
 		return index()
 	return render_template('login.html')
 

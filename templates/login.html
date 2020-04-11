@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+{% extends "layout.html" %}
 {% block body %}
 {% if session['logged_in'] %}
 <p>You're already logged in!</p>
@@ -13,8 +14,8 @@
 <form action="/login" method="POST">
 	<div class="login">
 		<div class="login-screen">
-			<input type="username" name="username" placeholder="Username">
-			<input type="password" name="password" placeholder="Password">
+			<input type="username" name="username" placeholder="username">
+			<input type="password" name="password" placeholder="current-password">
 			<input type="submit" value="Log in">
 		</div>
     </div>
