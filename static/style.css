@@ -114,6 +114,15 @@ button:hover, button:focus {
     border: 2px solid black;
 }
 
+.flashes {
+    list-style-type: none;
+    background: #f1f1f1;
+    color: #000;
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+}
+
 /* The contianer for dropdown - needed to position the content */
 .dropdown {
     position: relative;
