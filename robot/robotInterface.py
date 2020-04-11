@@ -52,41 +52,6 @@ def changeMode(mode):
 		bot.start()
 		bot.seek_dock()
 
-try:
-	while True:
-		conn, addr = sock.accept()
-		print("Connected " + str(addr[0]) + ":" + str(addr[1]))
-
-		voice()
-
-		while True:
-			try:
-				data = conn.recv(1024).decode()
-			except Exception:
-				break
-			if data:
-				print(data)
-			else:
-				break
-			if data[0:2] == "MO":
-				# We are moving
-				direction = data[2:data.index("S")]
-				speed = data[data.index("S")+1:]
-				sendCmd(direction, int(speed))
-
-			elif data[0:2] == "MD":
-				# We are changing modes
-				mode = data[2:]
-				changeMode(mode)
-
-		print("Disconnected " + str(addr[0]) + ":" + str(addr[1]))
-		conn.close()
-		bot.stop()
-
-except Exception:
-	print("Socket terminated")
-	sock.shutdown(socket.SHUT_RDWR)
-	sock.close()
 def audioRecorderCallback(fname):
     print ("converting audio to text")
     r = sr.Recognizer()
@@ -145,3 +110,40 @@ def voice():
 
 	detector.terminate()
 	bot.stop()
+
+try:
+	while True:
+		conn, addr = sock.accept()
+		print("Connected " + str(addr[0]) + ":" + str(addr[1]))
+
+		voice()
+
+		while True:
+			try:
+				data = conn.recv(1024).decode()
+			except Exception:
+				break
+			if data:
+				print(data)
+			else:
+				break
+			if data[0:2] == "MO":
+				# We are moving
+				direction = data[2:data.index("S")]
+				speed = data[data.index("S")+1:]
+				sendCmd(direction, int(speed))
+
+			elif data[0:2] == "MD":
+				# We are changing modes
+				mode = data[2:]
+				changeMode(mode)
+
+		print("Disconnected " + str(addr[0]) + ":" + str(addr[1]))
+		conn.close()
+		bot.stop()
+
+except Exception as inst:
+	print(inst)
+	print("Socket terminated")
+	sock.shutdown(socket.SHUT_RDWR)
+	sock.close()
