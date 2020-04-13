@@ -9,19 +9,16 @@ import speech_recognition as sr
 import os
 
 # Initialize our socket to recieve commands
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-sock.bind(('', 9999))
-sock.listen(1)
-print("Listening for connections...")
+# sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+# sock.bind(('', 9999))
+# sock.listen(1)
+# print("Listening for connections...")
 
 # Create out bot connection
 bot = create2api.Create2()
 bot.digit_led_ascii('    ')  # clear DSEG before Off mode
 bot.start()
-
-
-interrupted = False
 
 def sendCmd(dir, speed):
 	if dir == "forward":
@@ -80,13 +77,8 @@ def detectedCallback():
     sys.stdout.write("recording audio...")
     sys.stdout.flush()
 
-def signal_handler(signal, frame):
-    global interrupted
-    interrupted = True
-
 def interrupt_callback():
-    global interrupted
-    return interrupted
+    return False
 
 def voice():
 	if len(sys.argv) == 1:
@@ -96,8 +88,8 @@ def voice():
 
 	model = sys.argv[1]
 
-	# capture SIGINT signal, e.g., Ctrl+C
-	signal.signal(signal.SIGINT, signal_handler)
+	# # capture SIGINT signal, e.g., Ctrl+C
+	# signal.signal(signal.SIGINT, signal_handler)
 
 	detector = snowboydecoder.HotwordDetector(model, sensitivity=0.38)
 	print ("Listening... Press Ctrl+C to exit")
@@ -111,39 +103,39 @@ def voice():
 	detector.terminate()
 	bot.stop()
 
-try:
-	while True:
-		conn, addr = sock.accept()
-		print("Connected " + str(addr[0]) + ":" + str(addr[1]))
+# try:
+# 	while True:
+# 		conn, addr = sock.accept()
+# 		print("Connected " + str(addr[0]) + ":" + str(addr[1]))
 
-		voice()
+# 		voice()
 
-		while True:
-			try:
-				data = conn.recv(1024).decode()
-			except Exception:
-				break
-			if data:
-				print(data)
-			else:
-				break
-			if data[0:2] == "MO":
-				# We are moving
-				direction = data[2:data.index("S")]
-				speed = data[data.index("S")+1:]
-				sendCmd(direction, int(speed))
+# 		while True:
+# 			try:
+# 				data = conn.recv(1024).decode()
+# 			except Exception:
+# 				break
+# 			if data:
+# 				print(data)
+# 			else:
+# 				break
+# 			if data[0:2] == "MO":
+# 				# We are moving
+# 				direction = data[2:data.index("S")]
+# 				speed = data[data.index("S")+1:]
+# 				sendCmd(direction, int(speed))
 
-			elif data[0:2] == "MD":
-				# We are changing modes
-				mode = data[2:]
-				changeMode(mode)
+# 			elif data[0:2] == "MD":
+# 				# We are changing modes
+# 				mode = data[2:]
+# 				changeMode(mode)
 
-		print("Disconnected " + str(addr[0]) + ":" + str(addr[1]))
-		conn.close()
-		bot.stop()
+# 		print("Disconnected " + str(addr[0]) + ":" + str(addr[1]))
+# 		conn.close()
+# 		bot.stop()
 
-except Exception as inst:
-	print(inst)
-	print("Socket terminated")
-	sock.shutdown(socket.SHUT_RDWR)
-	sock.close()
+# except Exception as inst:
+# 	print(inst)
+# 	print("Socket terminated")
+# 	sock.shutdown(socket.SHUT_RDWR)
+# 	sock.close()

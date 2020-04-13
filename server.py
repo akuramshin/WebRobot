@@ -2,6 +2,8 @@ from flask import Flask, flash, render_template, request, redirect, Response, se
 import random, json
 import sys
 import socket
+import signal
+from robot.robotInterface import *
 
 app = Flask(__name__)
 
@@ -11,29 +13,31 @@ app.secret_key = 'X;\xce\xcc\xde\x8f.\x117\x16tO\xfd\x98\n<'
 HOST = "192.168.0.55"
 PORT = 9999
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-connected = False
-
-def connect():
-	global connected
-	try:
-		sock.connect((HOST, PORT))
-		print("Connection with bot established.")
-		connected = True
-	except Exception:
-		print("Failed to connect to bot.")
-		connected = False
+# sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# connected = False
 
 
-def relay(msg):
-	global connected
-	if connected:
-		try:
-			print("Command sent")
-			sock.send(msg.encode())
-		except Exception:
-			print("Failed to send command")
-			connected = False
+# def connect():
+# 	global connected
+# 	try:
+# 		sock.connect((HOST, PORT))
+# 		print("Connection with bot established.")
+# 		connected = True
+# 	except Exception as inst:
+# 		print(inst)
+# 		print("Failed to connect to bot.")
+# 		connected = False
+
+
+# def relay(msg):
+# 	global connected
+# 	if connected:
+# 		try:
+# 			print("Command sent")
+# 			sock.send(msg.encode())
+# 		except Exception:
+# 			print("Failed to send command")
+# 			connected = False
 
 
 @app.route("/")
@@ -63,9 +67,9 @@ def recieve():
 
     direction = str(data['Data']['direction'])
     speed = str(data['Data']['speed'])
-    relay("MO" + direction + "S" + speed)
+    sendCmd(direction, speed)
 
-    return "Robot moved"
+    return "Robot Moved"
 
 
 @app.route("/mode", methods = ['POST'])
@@ -74,7 +78,7 @@ def rec():
 	data = request.get_json()
 
 	mode = str(data['Data']['mode'])
-	relay("MD" + mode)
+	changeMode(mode)
 
 	return "Mode changed"
 
@@ -82,10 +86,7 @@ def rec():
 # Return the status of the connection with the bot
 @app.route("/getStatus", methods = ['GET'])
 def returnStatus():
-	if not connected:
-		connect()
-
-	currMode = json.dumps({"status": str(connected)})
+	currMode = json.dumps({"status": str(True)})
 	return currMode
 
 
