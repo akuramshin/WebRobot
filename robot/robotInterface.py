@@ -19,6 +19,7 @@ import os
 bot = create2api.Create2()
 bot.digit_led_ascii('    ')  # clear DSEG before Off mode
 bot.start()
+print("Bot started")
 
 def sendCmd(dir, speed):
 	if dir == "forward":

@@ -1,10 +1,11 @@
-from flask import Flask, flash, render_template, request, redirect, Response, session, abort
+
+pi@raspberrypi:~/camWebServer $ /home/pi/camWebServer/robotfrom flask import Flask, flash, render_template, request, redirect, Response, session, abort
 import random, json
 import sys
 import socket
 import signal
 sys.path.insert(1, '/home/pi/camWebServer/robot')
-import robotInterface as ri
+import robot
 
 app = Flask(__name__)
 
@@ -68,7 +69,7 @@ def recieve():
 
     direction = str(data['Data']['direction'])
     speed = str(data['Data']['speed'])
-    ri.sendCmd(direction,int(speed))
+    sendCmd(direction, speed)
 
     return "Robot Moved"
 
@@ -79,7 +80,7 @@ def rec():
 	data = request.get_json()
 
 	mode = str(data['Data']['mode'])
-	ri.changeMode(mode)
+	changeMode(mode)
 
 	return "Mode changed"
 
@@ -92,5 +93,5 @@ def returnStatus():
 
 
 if __name__ == "__main__":
-	#connected = connect()
+	connected = connect()
 	app.run("0.0.0.0", "8000")
